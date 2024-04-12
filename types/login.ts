@@ -1,11 +1,4 @@
-export interface Login {
-  name: String,
-  email: String,
-  password: String
-}
-
-
-export interface Signup {
+export interface Register {
   name: String,
   rationCardNumber: String,
   password: String
