@@ -1,6 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import { ArrowLeftCircleIcon, ArrowRightCircleIcon } from "@heroicons/react/24/solid";
+import {
+  ArrowLeftCircleIcon,
+  ArrowRightCircleIcon,
+} from "@heroicons/react/24/solid";
 
 export default function DateSelector() {
   // Initialize the state variable to the current date
@@ -21,15 +24,30 @@ export default function DateSelector() {
   };
 
   // Function to get formatted date information
-  const getDateInfo = (date:Date) => {
+  const getDateInfo = (date: Date) => {
     const monthNames = [
-      "January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
     ];
 
     const dayNames = [
-      "Sunday", "Monday", "Tuesday", "Wednesday",
-      "Thursday", "Friday", "Saturday"
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
     ];
 
     const monthName = monthNames[date.getMonth()];

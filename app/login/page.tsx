@@ -1,15 +1,11 @@
-import React from "react";
-import { Register } from "@/types/login";
-
-export default function login() {
+import React from 'react'
+import LoginPage from './LoginPage'
 
 
+export default function page() {
   return (
-    <main>
-      {/* <form onSubmit={()=> null}>
-
-      </form> */}
-
-    </main>
+    <div className='w-full h-full'>
+    <LoginPage />
+    </div>
   )
 }

@@ -27,13 +27,17 @@ export default function TimeSelector() {
   // Function to navigate to the previous time
   const previousTime = () => {
     // Decrement the current time index, and wrap around if necessary
-    setCurrentTimeIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : timeData.length - 1));
+    setCurrentTimeIndex((prevIndex) =>
+      prevIndex > 0 ? prevIndex - 1 : timeData.length - 1
+    );
   };
 
   // Function to navigate to the next time
   const nextTime = () => {
     // Increment the current time index, and wrap around if necessary
-    setCurrentTimeIndex((prevIndex) => (prevIndex < timeData.length - 1 ? prevIndex + 1 : 0));
+    setCurrentTimeIndex((prevIndex) =>
+      prevIndex < timeData.length - 1 ? prevIndex + 1 : 0
+    );
   };
 
   // Current time to display based on the current index
@@ -52,9 +56,7 @@ export default function TimeSelector() {
                 onClick={previousTime}
               />
               {/* Display the current time */}
-              <div className="mx-4">
-                {currentTime}
-              </div>
+              <div className="mx-4">{currentTime}</div>
 
               {/* Right arrow button */}
               <ArrowRightCircleIcon

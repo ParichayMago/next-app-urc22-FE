@@ -1,5 +1,8 @@
 export interface Register {
-  name: String,
-  rationCardNumber: String,
-  password: String
+  data: {
+    name: String,
+    rationCardNumber: String,
+    password: String
+    success: boolean
+  }
 }

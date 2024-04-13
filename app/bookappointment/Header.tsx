@@ -11,7 +11,9 @@ export function Header() {
             src={nccLogo.src}
             alt="URC 22 Punjab Canteen Logo"
           />
-          <h1 className="text-center text-[#cbd5e1] font-bold text-xl">URC 22 PUNJAB CANTEEN</h1>
+          <h1 className="text-center text-[#cbd5e1] font-bold text-xl">
+            URC 22 PUNJAB CANTEEN
+          </h1>
         </div>
       </div>
     </main>

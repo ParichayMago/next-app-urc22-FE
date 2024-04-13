@@ -3,6 +3,7 @@ import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
 import DateSelector from "./main/DateSclector";
 import TimeSelector from "./main/TimeSclector";
+import BookModel from "./main/BookModel";
 
 export default function page() {
   return (
@@ -14,6 +15,7 @@ export default function page() {
         <Header />
         <DateSelector />
         <TimeSelector />
+        <BookModel message = 'Appointment has been made' buttonMessage="Book Appointment"/>
       </div>
     </div>
   );
