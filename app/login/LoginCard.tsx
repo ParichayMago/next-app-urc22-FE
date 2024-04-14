@@ -92,6 +92,7 @@ const LoginCard: React.FC = () => {
             </CardContent>
             <CardFooter>
               <Button onClick={handleSubmit}>Login</Button>
+              <a className="mx-4" href="#" onClick={()=> router.push("/login") }>Click here to Signup</a>
             </CardFooter>
           </Card>
         </TabsContent>
