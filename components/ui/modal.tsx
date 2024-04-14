@@ -19,7 +19,7 @@ const Modal: React.FC<ModalProps> = ({ open, onClose, children, message }) => {
     >
       {message}
       <div
-        className="bg-black p-4 rounded-xl text-white grid"
+        className="bg-black p-4 rounded-xl text-white grid border glass border-1 border-gray-400"
         onClick={(e) => e.stopPropagation()}
       >
         {children}

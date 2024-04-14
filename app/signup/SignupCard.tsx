@@ -14,10 +14,13 @@ import { Tabs, TabsContent } from "@/components/ui/tabs";
 import axios from "axios";
 import { redirect } from "next/navigation";
 import Modal from "@/components/ui/modal";
+import { useRouter } from "next/navigation";
 
 const SignupCard: React.FC = () => {
+  const router = useRouter();
   const [fullName, setFullName] = useState<string>("");
-  const [phoneNumber, setPhoneNumber] = useState<number | any>(null)
+  const [email, setEmail] = useState<string>("")
+  const [phoneNumber, setPhoneNumber] = useState<number | any>("")
   const [password, setPassword] = useState<string>("");
   const [password2, setPassword2] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -31,18 +34,24 @@ const SignupCard: React.FC = () => {
     if(!doulbleCheckPassword()) {
       return;
     } 
-    if (fullName.trim() && password.trim()) {
+    if(fullName.length <= 3 || email.length <= 3 ) {
+      setErrorMessage("Enter valid name and email");
+      setIsModalOpen(true)
+    }
+    if (fullName.trim() && password.trim() && email.trim()) {
       try {
         doulbleCheckPassword()
         const response = await axios.post(`${apiEndpoint}/api/user/register`, {
           fullName,
+          email, 
           phoneNumber,
           password,
         });
 
         if (response.data.success) {
+          localStorage.setItem(email, "emailLS")
           // Assuming response.data contains a success field to indicate a successful login
-          redirect("/login"); // Redirecting to book appointment page
+          router.push("/bookappointment");
         } else {
           setErrorMessage(response.data.message || "Signup failed.");
           setIsModalOpen(true);
@@ -91,7 +100,15 @@ const SignupCard: React.FC = () => {
                 />
               </div>
               <div className="space-y-1">
-                <Label htmlFor="password">Phone Number</Label>
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="phoneNumber">Phone Number</Label>
                 <Input
                   id="phoneNumber"
                   type="string"

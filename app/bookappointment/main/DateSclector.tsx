@@ -5,9 +5,12 @@ import {
   ArrowRightCircleIcon,
 } from "@heroicons/react/24/solid";
 
-export default function DateSelector() {
-  // Initialize the state variable to the current date
-  const [currentDate, setCurrentDate] = useState(new Date());
+interface DateSclectorType{
+  currentDate: any,
+  setCurrentDate: any
+}
+
+export default function DateSelector({currentDate, setCurrentDate}:DateSclectorType) {
 
   // Function to handle clicking on the left arrow
   const handlePreviousDate = () => {
@@ -62,7 +65,7 @@ export default function DateSelector() {
 
   return (
     <main>
-      <div className="flex justify-center">
+      <div className="flex justify-center w-">
         <div className="flex border p-7 mt-10 rounded-lg w-30">
           <div className="flex-col text-[#cbd5e1] justify-center text-center text-bold">
             <div className="mb-5 text-2xl">Select Date</div>

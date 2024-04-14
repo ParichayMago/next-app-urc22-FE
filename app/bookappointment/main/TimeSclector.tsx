@@ -5,7 +5,7 @@ import {
   ArrowLeftCircleIcon,
 } from "@heroicons/react/24/solid";
 
-export default function TimeSelector() {
+export default function TimeSelector({parentSetCurrentTime}:any) {
   // List of times to navigate through
   const timeData = [
     "9:00",
@@ -42,6 +42,7 @@ export default function TimeSelector() {
 
   // Current time to display based on the current index
   const currentTime = timeData[currentTimeIndex];
+  parentSetCurrentTime(currentTime);
 
   return (
     <main>

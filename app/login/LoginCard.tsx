@@ -13,32 +13,33 @@ import { Tabs, TabsContent } from "@/components/ui/tabs";
 import axios from "axios";
 import { redirect } from "next/navigation";
 import Modal from "@/components/ui/modal";
+import { useRouter } from "next/navigation";
 
 const LoginCard: React.FC = () => {
-  const [fullName, setFullName] = useState<string>("");
+  const [emailOrPhoneNumber, setEmailOrPhoneNumber] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
+  
   // Define your API endpoint here
-  const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT || ""; // Retrieve the API endpoint from the environment variable
+  const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
+  
+  const router = useRouter();
 
   // Handle form submission
   const handleSubmit = async () => {
-    if (fullName.trim() && password.trim()) {
+    if (emailOrPhoneNumber.trim() && password.trim()) {
       try {
-        console.log("This is the api endpoint =>",apiEndpoint);
         const response = await axios.post(`${apiEndpoint}/api/user/login`, {
-          fullName,
+          emailOrPhoneNumber,
           password,
         });
-
         if (response.data.success) {
           // Assuming response.data contains a success field to indicate a successful login
-          localStorage.setItem("nameLS", fullName);
-          redirect("/bookappointment"); // Redirecting to book appointment page
+          localStorage.setItem("emailLS", response.data.user.email);
+          router.push("/bookappointment"); // Redirecting to book appointment page
         } else {
-          setErrorMessage(response.data.message || "Login failed.");
+          setErrorMessage(`Login failed. Error: ${response.data.message}`);
           setIsModalOpen(true);
         }
       } catch (error) {
@@ -69,11 +70,11 @@ const LoginCard: React.FC = () => {
             </CardHeader>
             <CardContent className="space-y-2">
               <div className="space-y-1">
-                <Label htmlFor="fullName">Full Name</Label>
+                <Label htmlFor="fullName">Email or Phone-Number</Label>
                 <Input
                   id="fullName"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
+                  value={emailOrPhoneNumber}
+                  onChange={(e) => setEmailOrPhoneNumber(e.target.value)}
                 />
               </div>
               <div className="space-y-1">
