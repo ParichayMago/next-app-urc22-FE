@@ -40,12 +40,13 @@ const BookModal: React.FC<BookModalProps> = ({
 
       // Handle server response
       setMessage(response.data.message);
+      // After updating the appointment, set available to true
+      setAvailable(true);
       setOpen(true);
     } catch (error) {
       handleError(error);
     }
   };
-
   // Function to handle the submission of the appointment
   const handleSubmit = async () => {
     const formattedDate = formatDate(date);
@@ -70,7 +71,7 @@ const BookModal: React.FC<BookModalProps> = ({
   };
 
   // Function to handle errors and update message
-  const handleError = (error) => {
+  const handleError = (error: any) => {
     if (axios.isAxiosError(error)) {
       console.error("Axios error occurred:", error);
 
