@@ -5,10 +5,10 @@ export default function SidebarApp() {
   return (
     <main>
       <Sidebar>
-        <SidebarItem  text="Home" />
-        <SidebarItem  text="Bookings" />
-        <SidebarItem  text= "Announcments" />
-        <SidebarItem  text="Logout"/>
+        <SidebarItem text="Home" />
+        <SidebarItem text="Bookings" />
+        <SidebarItem text="Announcments" />
+        <SidebarItem redirect="/login" text="Logout" />
       </Sidebar>
     </main>
   );

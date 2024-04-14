@@ -1,28 +1,35 @@
 "use client";
 
-import React, { PureComponent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Header } from "./Header";
 import DateSelector from "./main/DateSclector";
 import TimeSelector from "./main/TimeSclector";
 import BookModel from "./main/BookModel";
-import { useRouter } from "next/navigation";
 import SidebarApp from "./SidebarApp";
 
-export default function page() {
+export default function Page() {
   const [date, setDate] = useState<Date>(new Date());
   const [time, setTime] = useState<any>();
+  const [userEmail, setUserEmail] = useState<string | null>(null);
 
   const route = useRouter();
-  let userEmail:string = "";
 
+  // Set the user email state on component mount
   useEffect(() => {
-    userEmail = localStorage.getItem("emailLS");
-    if (!userEmail) {
+    const storedEmail = localStorage.getItem("emailLS");
+    setUserEmail(storedEmail);
+
+    if (!storedEmail) {
+      console.log("Email not found");
       route.push("/login");
+    } else {
+      console.log("User email found in booking app:", storedEmail);
     }
-  }, []);
+  }, [route]);
+
   return (
-    <div className="flex w-screen h-screen bg-black ">
+    <div className="flex w-screen h-screen bg-black">
       <div className="flex-basis-1/5 bg-color-white">
         <SidebarApp />
       </div>
@@ -31,11 +38,10 @@ export default function page() {
         <DateSelector currentDate={date} setCurrentDate={setDate} />
         <TimeSelector parentSetCurrentTime={setTime} />
         <BookModel
-          message="Appointment has been made"
           buttonMessage="Book Appointment"
           time={time}
           date={date}
-          email = {userEmail}
+          email={userEmail}
         />
       </div>
     </div>

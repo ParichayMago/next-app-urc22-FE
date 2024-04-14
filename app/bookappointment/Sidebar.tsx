@@ -1,5 +1,11 @@
-import { MoreVertical, ChevronLast, ChevronFirst, ActivitySquare } from "lucide-react"
-import { useContext, createContext, useState } from "react"
+import {
+  MoreVertical,
+  ChevronLast,
+  ChevronFirst,
+  ActivitySquare,
+} from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useContext, createContext, useState } from "react";
 
 interface SidebarContextType {
   expanded: boolean;
@@ -11,8 +17,8 @@ const SidebarContext = createContext<SidebarContextType>({
 });
 
 // Sidebar component
-export function Sidebar({ children }:any) {
-  const [expanded, setExpanded] = useState(true);
+export function Sidebar({ children }: any) {
+  const [expanded, setExpanded] = useState(false);
   return (
     <aside className="h-screen">
       <nav className="h-full flex flex-col bg-gray-200 border-r shadow-sm">
@@ -57,12 +63,20 @@ export function Sidebar({ children }:any) {
         </div>
       </nav>
     </aside>
-  )
+  );
 }
 
-export function SidebarItem({ icon, text, active, alert }:any) {
-  const { expanded } = useContext<any>(SidebarContext)
-  
+export function SidebarItem({ icon, text, active, alert, redirect }: any) {
+  const { expanded } = useContext<any>(SidebarContext);
+  const route = useRouter();
+
+  function handleClick(redirect: string) {
+    if (redirect == "/login") {
+      localStorage.removeItem("LSemail");
+    }
+    route.push(`${redirect}`);
+  }
+
   return (
     <li
       className={`
@@ -78,10 +92,11 @@ export function SidebarItem({ icon, text, active, alert }:any) {
     >
       {icon}
       <span
+        onClick={() => handleClick(redirect)}
         className={`overflow-hidden transition-all text-red ${
           expanded ? "w-52 ml-3" : "w-0"
         }
-        ${ active ? "bg-black text-red": "bg-red text-red"}
+        ${active ? "bg-black text-red" : "bg-red text-red"}
         `}
       >
         {text}
@@ -94,5 +109,5 @@ export function SidebarItem({ icon, text, active, alert }:any) {
         />
       )}
     </li>
-  )
+  );
 }

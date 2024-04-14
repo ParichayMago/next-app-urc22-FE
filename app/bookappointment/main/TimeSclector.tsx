@@ -1,48 +1,32 @@
 "use client";
-import React, { useState } from "react";
-import {
-  ArrowRightCircleIcon,
-  ArrowLeftCircleIcon,
-} from "@heroicons/react/24/solid";
+import React, { useState, useCallback, useEffect } from "react";
+import { ArrowRightCircleIcon, ArrowLeftCircleIcon } from "@heroicons/react/24/solid";
 
-export default function TimeSelector({parentSetCurrentTime}:any) {
-  // List of times to navigate through
+interface TimeSelectorProps {
+  parentSetCurrentTime: (time: string) => void;
+}
+
+const TimeSelector: React.FC<TimeSelectorProps> = ({ parentSetCurrentTime }) => {
   const timeData = [
-    "9:00",
-    "9:30",
-    "10:00",
-    "10:30",
-    "11:00",
-    "11:30",
-    "12:00",
-    "12:30",
-    "1:00",
-    "1:30",
-    "2:00",
+    "9:00", "9:30", "10:00", "10:30", "11:00", "11:30",
+    "12:00", "12:30", "1:00", "1:30", "2:00"
   ];
 
-  // State variable to keep track of the current time index
   const [currentTimeIndex, setCurrentTimeIndex] = useState(0);
 
-  // Function to navigate to the previous time
-  const previousTime = () => {
-    // Decrement the current time index, and wrap around if necessary
-    setCurrentTimeIndex((prevIndex) =>
-      prevIndex > 0 ? prevIndex - 1 : timeData.length - 1
-    );
-  };
+  // Use useEffect to update parent state whenever the current time changes
+  useEffect(() => {
+    parentSetCurrentTime(timeData[currentTimeIndex]);
+  }, [currentTimeIndex, parentSetCurrentTime, timeData]);
 
-  // Function to navigate to the next time
-  const nextTime = () => {
-    // Increment the current time index, and wrap around if necessary
-    setCurrentTimeIndex((prevIndex) =>
-      prevIndex < timeData.length - 1 ? prevIndex + 1 : 0
-    );
-  };
+  // Memoize navigation functions
+  const previousTime = useCallback(() => {
+    setCurrentTimeIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : timeData.length - 1));
+  }, [timeData]);
 
-  // Current time to display based on the current index
-  const currentTime = timeData[currentTimeIndex];
-  parentSetCurrentTime(currentTime);
+  const nextTime = useCallback(() => {
+    setCurrentTimeIndex((prevIndex) => (prevIndex < timeData.length - 1 ? prevIndex + 1 : 0));
+  }, [timeData]);
 
   return (
     <main>
@@ -51,15 +35,11 @@ export default function TimeSelector({parentSetCurrentTime}:any) {
           <div className="flex-col text-[#cbd5e1] justify-center text-center text-bold">
             <div className="mb-5 text-2xl">Select Time</div>
             <div className="flex items-center justify-center">
-              {/* Left arrow button */}
               <ArrowLeftCircleIcon
                 className="h-8 w-8 bg-black mx-2 rounded-full cursor-pointer"
                 onClick={previousTime}
               />
-              {/* Display the current time */}
-              <div className="mx-4">{currentTime}</div>
-
-              {/* Right arrow button */}
+              <div className="mx-4">{timeData[currentTimeIndex]}</div>
               <ArrowRightCircleIcon
                 className="h-8 w-8 bg-black mx-2 rounded-full cursor-pointer"
                 onClick={nextTime}
@@ -70,4 +50,6 @@ export default function TimeSelector({parentSetCurrentTime}:any) {
       </div>
     </main>
   );
-}
+};
+
+export default TimeSelector;

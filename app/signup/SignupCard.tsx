@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,8 +19,8 @@ import { useRouter } from "next/navigation";
 const SignupCard: React.FC = () => {
   const router = useRouter();
   const [fullName, setFullName] = useState<string>("");
-  const [email, setEmail] = useState<string>("")
-  const [phoneNumber, setPhoneNumber] = useState<number | any>("")
+  const [email, setEmail] = useState<string>("");
+  const [phoneNumber, setPhoneNumber] = useState<number | any>("");
   const [password, setPassword] = useState<string>("");
   const [password2, setPassword2] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -31,25 +31,25 @@ const SignupCard: React.FC = () => {
 
   // Handle form submission
   const handleSubmit = async () => {
-    if(!doulbleCheckPassword()) {
+    if (!doulbleCheckPassword()) {
       return;
-    } 
-    if(fullName.length <= 3 || email.length <= 3 ) {
+    }
+    if (fullName.length <= 3 || email.length <= 3) {
       setErrorMessage("Enter valid name and email");
-      setIsModalOpen(true)
+      setIsModalOpen(true);
     }
     if (fullName.trim() && password.trim() && email.trim()) {
       try {
-        doulbleCheckPassword()
+        doulbleCheckPassword();
         const response = await axios.post(`${apiEndpoint}/api/user/register`, {
           fullName,
-          email, 
+          email,
           phoneNumber,
           password,
         });
 
         if (response.data.success) {
-          localStorage.setItem(email, "emailLS")
+          localStorage.setItem(email, "emailLS");
           // Assuming response.data contains a success field to indicate a successful login
           router.push("/bookappointment");
         } else {
@@ -73,17 +73,18 @@ const SignupCard: React.FC = () => {
     setIsModalOpen(false);
   };
 
-  const doulbleCheckPassword= ()=> {
+  const doulbleCheckPassword = () => {
     if (password !== password2) {
-      setErrorMessage("Password do not match, try again")
-      setIsModalOpen(true)
-    }
-    else return true;
-  }
+      setErrorMessage("Password do not match, try again");
+      setIsModalOpen(true);
+    } else return true;
+  };
 
   return (
     <div className="flex justify-center items-center bg-black w-full h-screen">
-      <Modal open={isModalOpen} onClose={closeModal}>{errorMessage}</Modal>
+      <Modal open={isModalOpen} onClose={closeModal}>
+        {errorMessage}
+      </Modal>
       <Tabs defaultValue="account" className="w-[400px]">
         <TabsContent value="account">
           <Card>

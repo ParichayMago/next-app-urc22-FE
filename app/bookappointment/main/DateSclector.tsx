@@ -15,7 +15,7 @@ export default function DateSelector({currentDate, setCurrentDate}:DateSclectorT
   // Function to handle clicking on the left arrow
   const handlePreviousDate = () => {
     const newDate = new Date(currentDate);
-    newDate.setDate(currentDate.getDate() - 1);
+    newDate.setDate(currentDate.getDate() - 1); 
     setCurrentDate(newDate);
   };
 
